@@ -32,4 +32,23 @@ class CustomerController extends Controller
             'edit_url' => route('customer.edit', $customer),
         ]);
     }
+
+    public function create()
+    {
+        return Inertia::render('Customer/Create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'first_name' => ['required', 'string', 'min:2'],
+            'last_name' => ['required', 'string', 'min:2'],
+            'email_address' => ['required', 'email:dns', 'min:5'],
+            'contact_number' => ['required', 'string', 'min:5'],
+        ]);
+
+        Customer::create($request->all());
+
+        return to_route('customer.index');
+    }
 }
