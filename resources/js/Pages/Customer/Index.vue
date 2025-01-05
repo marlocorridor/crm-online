@@ -52,12 +52,19 @@ defineProps({
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ person.email_address }}</td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ person.contact_number }}</td>
                     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                      <Link :href="person.show_url" class="text-indigo-600 hover:text-indigo-900 ml-2">
-                        View<span class="sr-only">, {{ person.name }}</span>
-                      </Link>
-                      <Link :href="person.edit_url" class="text-indigo-600 hover:text-indigo-900 ml-2">
-                        Edit<span class="sr-only">, {{ person.name }}</span>
-                      </Link>
+                      <template v-if="!is_trashed">
+                        <Link :href="person.show_url" class="text-indigo-600 hover:text-indigo-900 ml-2">
+                          View<span class="sr-only">, {{ person.name }}</span>
+                        </Link>
+                        <Link :href="person.edit_url" class="text-indigo-600 hover:text-indigo-900 ml-2">
+                          Edit<span class="sr-only">, {{ person.name }}</span>
+                        </Link>
+                      </template>
+                      <template v-else>
+                        <Link :href="person.restore_url" class="text-indigo-600 hover:text-indigo-900 ml-2">
+                          Restore<span class="sr-only">, {{ person.name }}</span>
+                        </Link>
+                      </template>
                     </td>
                   </tr>
                 </tbody>

@@ -29,6 +29,7 @@ class CustomerController extends Controller
                     'is_trashed' => $customer->trashed(),
                     'show_url' => route('customer.show', $customer),
                     'edit_url' => route('customer.edit', $customer),
+                    'restore_url' => route('customer.restore', $customer),
                 ];
             }),
             'create_url' => route('customer.create'),
