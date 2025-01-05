@@ -25,4 +25,11 @@ class CustomerController extends Controller
         ]);
     }
 
+    public function show(Customer $customer)
+    {
+        return Inertia::render('Customer/Show', [
+            'customer' => $customer,
+            'edit_url' => route('customer.edit', $customer),
+        ]);
+    }
 }
