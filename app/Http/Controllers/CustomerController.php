@@ -59,6 +59,7 @@ class CustomerController extends Controller
             'contact_number' => ['required', 'string', 'min:5'],
         ]);
 
+        // create new customer record
         Customer::create($request->all());
 
         return to_route('customer.index');
@@ -81,6 +82,7 @@ class CustomerController extends Controller
             'contact_number' => ['required', 'string', 'min:5'],
         ]);
 
+        // update customer record
         $customer->update($request->all());
 
         return to_route('customer.index');
