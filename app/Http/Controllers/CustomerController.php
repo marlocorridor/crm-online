@@ -51,4 +51,26 @@ class CustomerController extends Controller
 
         return to_route('customer.index');
     }
+
+    public function edit(Customer $customer)
+    {
+        return Inertia::render('Customer/Edit', [
+            'customer' => $customer,
+            'update_url' => route('customer.update', $customer),
+        ]);
+    }
+
+    public function update(Request $request, Customer $customer)
+    {
+        $request->validate([
+            'first_name' => ['required', 'string', 'min:2'],
+            'last_name' => ['required', 'string', 'min:2'],
+            'email_address' => ['required', 'email:dns', 'min:5', 'unique:customers,email_address,' . $customer->id],
+            'contact_number' => ['required', 'string', 'min:5'],
+        ]);
+
+        $customer->update($request->all());
+
+        return to_route('customer.index');
+    }
 }
