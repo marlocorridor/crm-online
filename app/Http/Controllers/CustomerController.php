@@ -73,4 +73,11 @@ class CustomerController extends Controller
 
         return to_route('customer.index');
     }
+
+    public function destroy(Customer $customer)
+    {
+        $customer->delete();
+
+        return to_route('customer.index');
+    }
 }
