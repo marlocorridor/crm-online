@@ -8,20 +8,31 @@ use Inertia\Inertia;
 
 class CustomerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $is_trashed = $request->has('trashed') && $request->trashed !== 'false';
+        $customers = Customer::query()
+            // allow list of trashed customers
+            ->when($is_trashed, fn ($query) => $query->onlyTrashed())
+            // sorting
+            ->orderBy('last_name')
+            // get query result
+            ->get();
+
         return Inertia::render('Customer/Index', [
-            'customers' => Customer::orderBy('last_name')->get()->map(function ($customer) {
+            'customers' => $customers->map(function ($customer) {
                 return [
                     'first_name' => $customer->first_name,
                     'last_name' => $customer->last_name,
                     'email_address' => $customer->email_address,
                     'contact_number' => $customer->contact_number,
+                    'is_trashed' => $customer->trashed(),
                     'show_url' => route('customer.show', $customer),
                     'edit_url' => route('customer.edit', $customer),
                 ];
             }),
             'create_url' => route('customer.create'),
+            'is_trashed' => $is_trashed,
         ]);
     }
 
