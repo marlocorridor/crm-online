@@ -91,4 +91,14 @@ class CustomerController extends Controller
 
         return to_route('customer.index');
     }
+
+    public function restore(string $customer)
+    {
+        $customer = Customer::withTrashed()->findOrFail($customer);
+
+        // restore soft-deleted customer record
+        $customer->restore();
+
+        return to_route('customer.index');
+    }
 }

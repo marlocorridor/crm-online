@@ -23,5 +23,7 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
+    Route::get('/customer/{customer}/restore', [CustomerController::class, 'restore'])
+        ->name('customer.restore');
     Route::resource('/customer', CustomerController::class);
 });
