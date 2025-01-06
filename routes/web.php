@@ -14,6 +14,12 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/guide', function () {
+    return Inertia::render('TermsOfService', [
+        'terms' => '<pre>'. file_get_contents(base_path('README.md')) . '</pre>',
+    ]);
+});
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
